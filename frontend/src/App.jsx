@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css';
+import PortfolioInput from './components/PortfolioInput';
+import NewsList from './components/NewsList';
+import FilteredNews from './components/FilteredNews';
 
 function App() {
   const [news, setNews] = useState([]);
+  const [portfolio, setPortfolio] = useState([]);
 
-useEffect(() => {
-  axios
-    .get("http://localhost:5000/api/news")
-    .then((res) => {
-      console.log(res.data);
-      setNews(res.data);
-    })
-    .catch((err) => {
-      console.error("Error fetching news:", err);
-    });
-}, []);
-
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/news')
+      .then(res => setNews(res.data))
+      .catch(err => console.error(err));
+  }, []);
 
   return (
-    <div className="App">
-      <h1 className=''>📈 Stock Market News AI</h1>
-      <h2 className='m-2 text-gray-100'>📰 General News</h2>
-      <ul>
-        {Array.isArray(news) && news.length > 0 ? (
-          news.map((item, index) => <li key={index}><a href={item.link} className='text-white visited:text-white hover:text-white'>{item.title}</a></li>)
-        ) : (
-          <p>No news available or loading...</p>
-        )}
-      </ul>
+    <div className="min-h-screen w-full bg-gray-900 text-white p-4">
+      <h1 className="text-3xl font-bold mb-4">📈 Stock Market News AI</h1>
+      <PortfolioInput portfolio={portfolio} setPortfolio={setPortfolio} />
+      <NewsList news={news} />
+      <FilteredNews news={news} portfolio={portfolio} />
     </div>
   );
 }

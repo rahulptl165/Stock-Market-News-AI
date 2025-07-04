@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
       if (title) news.push({ title, link });
     });
 
-    res.json(news.slice(0, 10));
+    res.json(news.slice(0, 100));
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
