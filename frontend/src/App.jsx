@@ -15,11 +15,13 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gray-900 text-white p-4">
-      <h1 className="text-3xl font-bold mb-4">📈 Stock Market News AI</h1>
+    <div className="min-h-screen min-w-full bg-gray-900 text-white p-4">
+      <h1 className="text-3xl font-bold mb-4 text-center">📈 Stock Market News AI</h1>
       <PortfolioInput portfolio={portfolio} setPortfolio={setPortfolio} />
-      <NewsList news={news} />
-      <FilteredNews news={news} portfolio={portfolio} />
+      <div className='flex flex-col md:flex-row lg:flex-row'>
+        <div className='flex-1'><NewsList news={news} /></div>
+        <div className='flex-1'><FilteredNews news={news} portfolio={portfolio} /></div>
+      </div>
     </div>
   );
 }

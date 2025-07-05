@@ -17,14 +17,14 @@ function PortfolioInput({ portfolio, setPortfolio }) {
   };
 
   return (
-    <div className="mb-6">
-      <h2 className="text-xl font-semibold mb-2">🎯 Add Portfolio Stocks</h2>
+    <div className="mb-6 p-4">
+      <h2 className="text-2xl font-bold text-white mb-4">🎯 Add Portfolio Stocks</h2>
       <div className="flex gap-2">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="px-3 py-2 rounded text-gray-400 border border-0.5"
-          placeholder="Enter stock symbol"
+          placeholder="Enter stock name"
         />
         <button onClick={handleAdd} className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-300">
           Add

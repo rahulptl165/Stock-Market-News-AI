@@ -1,4 +1,6 @@
 const express = require('express');
+const newsRouter = require('./routes/news');
+const analysisRouter = require('./routes/analysis');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
@@ -10,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/news', require('./routes/news'));
+app.use('/api/news', newsRouter);
+app.use('/api/analyze', analysisRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
