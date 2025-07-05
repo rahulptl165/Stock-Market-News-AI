@@ -10,7 +10,7 @@ function App() {
   const [portfolio, setPortfolio] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/news')
+    axios.get('https://stock-market-news-ai.vercel.app/api/news')
       .then(res => setNews(res.data))
       .catch(err => console.error(err));
   }, []);

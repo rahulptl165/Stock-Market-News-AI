@@ -13,7 +13,7 @@ function FilteredNews({ news, portfolio }) {
   useEffect(() => {
     filtered.forEach((item) => {
       if (!analysisMap[item.title]) {
-        axios.post('http://localhost:5000/api/analyze', { title: item.title })
+        axios.post('https://stock-market-news-ai.vercel.app/api/analyze', { title: item.title })
           .then(res => {
             setAnalysisMap(prev => ({
               ...prev,
