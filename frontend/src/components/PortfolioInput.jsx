@@ -1,19 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-
-function PortfolioInput({ portfolio, setPortfolio }) {
+function PortfolioInput({ onUpdate }) {
   const [input, setInput] = useState('');
+  const [portfolio, setPortfolio] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("portfolio");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setPortfolio(parsed);
+      onUpdate(parsed);
+    }
+  }, []);
 
   const handleAdd = () => {
-    const symbol = input.trim().toUpperCase();
-    if (symbol && !portfolio.includes(symbol)) {
-      setPortfolio([...portfolio, symbol]);
-      setInput('');
-    }
+    const stocks = input.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+    const updated = [...new Set([...portfolio, ...stocks])];
+    setPortfolio(updated);
+    localStorage.setItem("portfolio", JSON.stringify(updated));
+    onUpdate(updated);
+    setInput("");
   };
 
-  const handleRemove = (symbol) => {
-    setPortfolio(portfolio.filter((s) => s !== symbol));
+  const handleRemove = (name) => {
+    const updated = portfolio.filter(s => s !== name);
+    setPortfolio(updated);
+    localStorage.setItem("portfolio", JSON.stringify(updated));
+    onUpdate(updated);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') handleAdd();
   };
 
   return (
@@ -23,22 +40,23 @@ function PortfolioInput({ portfolio, setPortfolio }) {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="px-3 py-2 rounded text-gray-400 border border-0.5"
-          placeholder="Enter stock name"
+          onKeyDown={handleKeyPress}
+          className="px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+          placeholder="Enter stock name (comma separated, e.g., RELIANCE, TCS)"
         />
-        <button onClick={handleAdd} className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-300">
+        <button onClick={handleAdd} className="bg-blue-600 px-4 py-2 rounded text-white hover:bg-blue-500 transition">
           Add
         </button>
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {portfolio.map((symbol, idx) => (
+        {portfolio.map((name, idx) => (
           <span
             key={idx}
-            className="bg-blue-800 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+            className="bg-blue-800 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2"
           >
-            {symbol}
-            <button onClick={() => handleRemove(symbol)}>✖</button>
+            {name}
+            <button onClick={() => handleRemove(name)} className='text-red-100 hover:text-red-500'>✖</button>
           </span>
         ))}
       </div>
