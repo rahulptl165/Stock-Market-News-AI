@@ -2,21 +2,35 @@ function NewsList({ news }) {
   return (
     <div className="bg-gray-900 p-4 rounded-xl shadow-lg mb-6">
       <h2 className="text-2xl font-bold text-white mb-4">📰 General News</h2>
-      { news.length == 0 ? (
+
+      {news.length === 0 ? (
         <p className="text-gray-400 text-sm animate-pulse">Loading...</p>
-      ) :
-        (<ul className="space-y-2 max-h-128 overflow-y-scroll no-scrollbar">
-        {news.map((item, index) => (
-          <li key={index} className="bg-gray-800 rounded-lg p-4 border border-gray-700 hover:shadow-md transition text-gray-300 font-semibold">
-            <a
-              href={item.link}
-              className="text-gray-400 hover:text-yellow-400 hover:underline"
+      ) : (
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-3 sm:px-0 max-h-[540px] min-h-48 overflow-scroll no-scrollbar">
+          {news.map((item, index) => (
+            <div
+              key={index}
+              className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-transform duration-300"
             >
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ul>)}
+              <img
+                src={item.img}
+                alt={item.title || "News image"}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-lg font-medium hover:underline"
+                >
+                  {item.title}
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

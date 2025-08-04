@@ -17,11 +17,21 @@ function App() {
 
   return (
     <div className="min-h-screen min-w-full bg-gray-900 text-white p-4">
-      <h1 className="text-3xl font-bold mb-4 text-center">📈 Stock Market News AI</h1>
-      <PortfolioInput onUpdate={setPortfolio} />
-      <div className='flex flex-col md:flex-row lg:flex-row'>
-        <div className='flex-1'><NewsList news={news} /></div>
-        <div className='flex-1'><FilteredNews news={news} portfolio={portfolio} /></div>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-8">
+        <h1 className="font-medium text-white sm:text-sm">📈 EquityEye</h1>
+        <a
+          href="#matching-news"
+          className="text-xl font-bold text-blue-400 hover:underline mr-2"
+        >
+          Portfolio News
+        </a>
+      </div>
+      <div>
+        <PortfolioInput onUpdate={setPortfolio} />
+        <div className='flex flex-col '>
+          <div className='flex-1'><NewsList news={news} /></div>
+          <div className='flex-1'><FilteredNews news={news} portfolio={portfolio} /></div>
+        </div>
       </div>
       <Footer />
     </div>
