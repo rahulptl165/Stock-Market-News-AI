@@ -15,6 +15,10 @@ app.use(express.json());
 app.use('/api/news', newsRouter);
 app.use('/api/analyze', analysisRouter);
 
+app.get('/', (req, res)=>{
+  res.send("Server is working");
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
